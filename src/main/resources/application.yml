@@ -1,0 +1,30 @@
+server:
+  port: ${appPort:9999}
+
+# For Spring MVC to enable Endpoints access (/admin/info, /admin/health, ...) along with Jersey
+server.servlet-path: /
+
+# http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#production-ready-endpoints
+# http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#howto-use-actuator-with-jersey
+#endpoints:
+#  enabled: false
+#  info:
+#    enabled: true
+#  health:
+#    enabled: true
+#  metrics:
+#    enabled: true
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: ${eurekaServers}
+  instance:
+    hostname: ${hostName}
+    statusPageUrlPath: ${server.servlet-path}/info
+    healthCheckUrlPath: ${server.servlet-path}/health
+    preferIpAddress: true
+    metadataMap:
+      instanceId: ${spring.application.name}:${server.port}
